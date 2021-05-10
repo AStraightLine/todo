@@ -24,6 +24,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
 }
 
 header {
@@ -35,11 +36,12 @@ header {
 }
 
 #hamburgerMenuIcon {
+    width: 200px;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 25px;
+    align-items: center;
 }
 
 .hamburgerPart {
@@ -50,6 +52,20 @@ header {
     border-radius: 3px;
 }
 
+h1 {
+    line-height: 65px;
+    font-weight: 500;
+    font-style: italic;
+}
+
+#addButton {
+    flex: 1 1 auto;
+    text-align: end;
+    line-height: 65px;
+    padding-right: 50px;
+    font-size: 72px;
+}
+
 #mainContainer {
     display: flex;
     flex: 1 1 auto;
@@ -57,9 +73,76 @@ header {
 }
 
 #sideNavContainer {
-    width: 250px;
+    width: 200px;
     height: 100%;
     border-right: 1px solid rgba(25, 25, 25, 0.9);
+}
+
+#sideNavContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.navTopItem {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+#newProjectButton {
+    font-size: 18px;
+}
+
+#newProjectPlusSymbol {
+    font-size: 32px;
+}
+
+#newProjectFormContainer {
+    width: 100%;
+    display: none;
+    justify-content: center;
+}
+
+.newProjectLabel {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.newProjectInput {
+    width: 125px;
+}
+
+#formControllButtonsContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#formModal {
+    display: none;
+    position: absolute;
+    top: 0;
+    z-index: 9;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#popupBody {
+    width: 375px;
+    height: 550px;
+    background-color: white;
+    border-radius: 0.25vw;
+    filter: drop-shadow(0.3em 0.3em 0.3em rgba(25, 25, 25, 0.5));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #mainContentContainer {

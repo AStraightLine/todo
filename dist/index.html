@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="styles/main.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
     <title>ToDo</title>
 </head>
 <body>
@@ -12,13 +14,47 @@
             <div class="hamburgerPart"></div>
             <div class="hamburgerPart"></div>
         </div>
+        <h1>To-Do List</h1>
+        <div id="addButton">+</div>
     </header>
     <div id="mainContainer">
         <div id="sideNavContainer">
-    
+            <div id="sideNavContent">
+                <div id="allSelection" class="navTopItem">All</div>
+                <div id="todaySelection" class="navTopItem">Today</div>
+                <div id="weekSelection" class="navTopItem">Week</div>
+                <div id="projectsSelection" class="navTopItem">Projects</div>
+                <div id="newProjectButton" class="navTopItem"><span id="newProjectPlusSymbol">+</span> Add Project</div>
+                <div id="newProjectFormContainer">
+                    <form id="newProjectForm" onsubmit="return addProjectSubmit()">
+                        <label for="projectName" class="newProjectLabel">
+                            Name
+                        </label>
+                        <input type="text" name="projectName" id="projectNameInput" class="newProjectInput">
+                        <div id="formControllButtonsContainer">
+                            <input id="addProjectButton" class="formControllButton" type="submit" value="Add">
+                            <button type="button" id="clearFieldsButton" class="formControllButton">Clear</button>
+                            <button type="button" id="closeFormButton" class="formControllButton">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div id="mainContentContainer">
 
+        </div>
+    </div>
+    <div id="formModal">
+        <div id="popupBody">
+            <div id="formTitle">Add ToDo</div>
+            <div id="formContainer">
+                <form id="newToDoForm" onsubmit="">
+                    <label for="toDoTitle" class="">
+                        Title
+                    </label>
+                    <input type="text" name="toDoTitle" id="" class="">
+                </form>
+            </div>
         </div>
     </div>
 <script src="main.js" type="text/javascript"></script>
