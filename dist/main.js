@@ -1,1 +1,1 @@
-(()=>{"use strict";document.getElementById("newProjectButton")})();
+(()=>{"use strict";(()=>{const e=document.getElementById("newProjectButton"),t=document.getElementById("newProjectFormContainer"),n=document.getElementById("clearFieldsButton"),l=document.getElementById("closeFormButton"),d=document.getElementById("projectNameInput"),c=()=>{t.style.display="flex"},o=()=>{t.style.display="none"},i=()=>{d.textContent=null,d.value=null};return{initUI:()=>{e.addEventListener("click",c),n.addEventListener("click",i),l.addEventListener("click",o)}}})().initUI()})();
