@@ -15,7 +15,7 @@
             <div class="hamburgerPart"></div>
         </div>
         <h1>To-Do List</h1>
-        <div id="addButton">+</div>
+        <div id="addToDoButton">+</div>
     </header>
     <div id="mainContainer">
         <div id="sideNavContainer">
@@ -24,6 +24,9 @@
                 <div id="todaySelection" class="navTopItem">Today</div>
                 <div id="weekSelection" class="navTopItem">Week</div>
                 <div id="projectsSelection" class="navTopItem">Projects</div>
+                <div id="projectsContainer">
+                    <!-- Dynamically populate with project names -->
+                </div>
                 <div id="newProjectButton" class="navTopItem"><span id="newProjectPlusSymbol">+</span> Add Project</div>
                 <div id="newProjectFormContainer">
                     <form id="newProjectForm" onsubmit="return addProjectSubmit()">
@@ -31,10 +34,10 @@
                             Name
                         </label>
                         <input type="text" name="projectName" id="projectNameInput" class="newProjectInput">
-                        <div id="formControllButtonsContainer">
-                            <input id="addProjectButton" class="formControllButton" type="submit" value="Add">
-                            <button type="button" id="clearFieldsButton" class="formControllButton">Clear</button>
-                            <button type="button" id="closeFormButton" class="formControllButton">Close</button>
+                        <div id="projectFormControllButtonsContainer">
+                            <button type="button" id="closeFormButton" class="projectFormControllButton">Close</button>
+                            <button type="button" id="clearFieldsButton" class="projectFormControllButton">Clear</button>
+                            <input id="addProjectButton" class="projectFormControllButton" type="submit" value="Add">
                         </div>
                     </form>
                 </div>
@@ -44,15 +47,55 @@
 
         </div>
     </div>
-    <div id="formModal">
+    <div id="toDoFormModal">
         <div id="popupBody">
             <div id="formTitle">Add ToDo</div>
             <div id="formContainer">
-                <form id="newToDoForm" onsubmit="">
-                    <label for="toDoTitle" class="">
-                        Title
-                    </label>
-                    <input type="text" name="toDoTitle" id="" class="">
+                <form id="newToDoForm" onsubmit="return addToDoSubmit()">
+                    <div class="formElementContainer">
+                        <label for="toDoTitle" class="toDoFormLabel">
+                            Title
+                        </label>
+                        <input type="text" name="toDoTitle" id="toDoTitleInput" class="toDoFormInput">
+                    </div>
+                    <div class="formElementContainer">
+                        <label for="toDoDescription" class="toDoFormLabel">
+                            Description
+                        </label>
+                        <input type="text" name="toDoDescription" id="toDoDescriptionInput" class="toDoFormInput">
+                    </div>
+                    <div class="formElementContainer">
+                        <label for="toDoDueDate" class="toDoFormLabel">
+                            Due
+                        </label>
+                        <input type="date" name="toDoDueDate" id="toDoDueDateInput" class="toDoFormInput">
+                    </div>
+                    <div class="formElementContainer">
+                        <label for="toDoPriority" class="toDoFormLabel">
+                            Priority
+                        </label>
+                        <select name="toDoPriority" id="toDoPrioritySelect" class="toDoFormInput">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div id="toDoFormProjectSelectContainer" class="formElementContainer">
+                        <label for="toDoProject" class="toDoFormLabel">
+                            Project
+                        </label>
+                        <select name="toDoProject" id="toDoProjectSelect" class="toDoFormInput">
+                            <option value=""></option>
+                            <!-- Dynamically add available projects for user to select from - default is 'All' and will be added to any other in addition to this -->
+                        </select>
+                    </div>
+                    <div class="formElementContainer">
+                        <div id="toDoFormControllButtonsContainer">
+                            <button type="button" id="closeToDoFormButton" class="toDoFormControllButton">Close</button>
+                            <button type="button" id="clearToDoFieldsButton" class="toDoFormControllButton">Clear</button>
+                            <input id="addProjectButton" class="toDoFormControllButton" type="submit" value="Add">
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
