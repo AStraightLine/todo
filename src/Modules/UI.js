@@ -7,6 +7,7 @@ export const UI = (() => {
     const _newProjectButton = document.getElementById('newProjectButton');
 
     // ToDo form containers and buttons
+    const _newToDoForm = document.getElementById('newToDoForm');
     const _toDoFormModal = document.getElementById('toDoFormModal');
     const _closeToDoFormButton = document.getElementById('closeToDoFormButton');
     const _clearToDoFieldsButton = document.getElementById('clearToDoFieldsButton');
@@ -15,6 +16,7 @@ export const UI = (() => {
     const _toDoTitleInput = document.getElementById('toDoTitleInput');
 
     // Project form containers and buttons
+    const _newProjectForm = document.getElementById('newProjectForm');
     const _newProjectFormContainer = document.getElementById('newProjectFormContainer');
     const _clearNewProjectFormButton = document.getElementById('clearFieldsButton');
     const _closeFormButton = document.getElementById('closeFormButton');
@@ -33,6 +35,16 @@ export const UI = (() => {
         _newProjectButton.addEventListener('click', _openNewProjectForm);
         _clearNewProjectFormButton.addEventListener('click', _clearNewProjectFormFields);
         _closeFormButton.addEventListener('click', _closeNewProjectForm);
+
+        _newToDoForm.addEventListener('submit', function(e) {
+            _addToDoSubmit();
+            e.preventDefault();
+        });
+
+        _newProjectForm.addEventListener('submit', function(e) {
+            _addProjectSubmit();
+            e.preventDefault();
+        });
     };
 
     const _openToDoForm = () => {
@@ -52,7 +64,7 @@ export const UI = (() => {
         // If more inputs are added later, clear them too. 
     }
 
-    const addToDoSubmit = () => {
+    const _addToDoSubmit = () => {
         // Do something with the data
         // Then
         _closeToDoForm();
@@ -75,8 +87,7 @@ export const UI = (() => {
     };
 
     const _addProjectSubmit = () => {
-        // Do something with the data
-        // then
+        // working time to implement
         _closeNewProjectForm();
     };
 
