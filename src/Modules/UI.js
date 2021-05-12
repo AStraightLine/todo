@@ -1,3 +1,5 @@
+import {Interface} from './Interface'
+
 export const UI = (() => {
 
     // Open form buttons
