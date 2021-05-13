@@ -34,6 +34,7 @@ export const UI = (() => {
         _populateToDoDisplay(Interface.getAllToDos());
         _populateProjectsDisplay();
         _initListeners();
+        _populateToDoFormProjectOptions(Interface.getAllProjects());
     };
 
     const _initListeners = () => {
@@ -73,8 +74,14 @@ export const UI = (() => {
     }
 
     const _addToDoSubmit = () => {
-        // Do something with the data
-        // Then
+        const _titleInput = document.getElementById('toDoTitleInput').value;
+        const _DescInput = document.getElementById('toDoDescriptionInput').value;
+        const _dueInput = document.getElementById('toDoDueDateInput').value;
+        const _prioInput = document.getElementById('toDoPrioritySelect').value;
+        const _projectInput = document.getElementById('toDoProjectSelect').value;
+
+        Interface.newToDo(_titleInput, _DescInput, _dueInput, _prioInput, _projectInput);
+
         _closeToDoForm();
     }
 
@@ -137,6 +144,10 @@ export const UI = (() => {
             _toDoPrio.classList.add('toDoPrio');
             _toDoPrio.textContent = project[i].getPrio();
 
+            const _toDoProject = document.createElement('div');
+            _toDoProject.classList.add('toDoProject');
+            _toDoProject.textContent = project[i].getProject();
+
             const _toDoComplete = document.createElement('div');
             _toDoComplete.classList.add('toDoComplete');
             _toDoComplete.textContent = project[i].getComplete();
@@ -146,10 +157,22 @@ export const UI = (() => {
             _toDoContainer.appendChild(_toDoDesc);
             _toDoContainer.appendChild(_toDoDue);
             _toDoContainer.appendChild(_toDoPrio);
+            _toDoContainer.appendChild(_toDoProject);
             _toDoContainer.appendChild(_toDoComplete);
 
             // Add container to DOM
             _toDosContainer.appendChild(_toDoContainer);
+        };
+    };
+
+    const _populateToDoFormProjectOptions = (projects) => {
+        const _toDoProjectSelect = document.getElementById('toDoProjectSelect');
+
+        for (let i = 0; i < projects.length; i++) {
+            const _selectProjectOption = document.createElement('option');
+            _selectProjectOption.setAttribute('value', projects[i].getTitle());
+            _selectProjectOption.textContent = projects[i].getTitle();
+            _toDoProjectSelect.appendChild(_selectProjectOption);
         };
     };
 

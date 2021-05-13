@@ -13,9 +13,9 @@ export const Interface = (() => {
     _allProjects.push(Project('Daily Routine'));
     _allProjects.push(Project('The Odin Project'));
     // And populate those with some toDos
-    _allToDos.push(ToDo('Wake up', 'Get up now.', '23/june/1995', 'Medium', false));
-    _allToDos.push(ToDo('Brush teeth', 'Do it Well, do it often.', '23/june/1995', 'Low', false));
-    _allToDos.push(ToDo('Make this app', "It won't make itself.", '23/june/1995', 'High', false));
+    _allToDos.push(ToDo('Wake up', 'Get up now.', '23/june/1995', 'Medium', 'Daily Routine'));
+    _allToDos.push(ToDo('Brush teeth', 'Do it Well, do it often.', '23/june/1995', 'Low', 'Daily Routine'));
+    _allToDos.push(ToDo('Make this app', "It won't make itself.", '23/june/1995', 'High', 'The Odin Project'));
 
     //title, desc, due, prio, complete
 
@@ -29,19 +29,21 @@ export const Interface = (() => {
     };
 
     const _getProject = (project) => {
-        const _project = _allProjects.filter(obj => {
-            obj.getTitle() == project;
-        });
-        return _project;
+        for(let i = 0; i < _allProjects.length; i++) {
+            if(_allProjects[i].getTitle() == project) {
+                return _allProjects[i];
+            }
+        };
     };
 
     // create new todo and project objects
-    const newToDo = (title, desc, due, prio, complete, project) => {
-        _allToDos.push(ToDo(title, desc, due, prio, complete));
+    const newToDo = (title, desc, due, prio, project) => {
+        const _newToDo = ToDo(title, desc, due, prio, project);
+        _allToDos.push(_newToDo);
         if(project) {
-            const _project = _getProject();
-            _project[0].addTodo(_newTodo);
-        }
+            const _project = _getProject(project);
+            _project.addTodo(_newToDo);
+        }    
     };
 
     const newProject = (title) => {
