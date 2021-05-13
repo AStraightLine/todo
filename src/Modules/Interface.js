@@ -13,9 +13,9 @@ export const Interface = (() => {
     _allProjects.push(Project('Daily Routine'));
     _allProjects.push(Project('The Odin Project'));
     // And populate those with some toDos
-    _allToDos.push(ToDo('Wake up', 'Get up now.', '23/june/1995', 'Medium', 'Daily Routine'));
-    _allToDos.push(ToDo('Brush teeth', 'Do it Well, do it often.', '23/june/1995', 'Low', 'Daily Routine'));
-    _allToDos.push(ToDo('Make this app', "It won't make itself.", '23/june/1995', 'High', 'The Odin Project'));
+    _allToDos.push(ToDo('Wake up', 'Get up now.', '23.06.1995', 'High', 'Daily Routine'));
+    _allToDos.push(ToDo('Brush teeth', 'Do it Well, do it often.', '23.06.1995', 'High', 'Daily Routine'));
+    _allToDos.push(ToDo('Make this app', "It won't make itself.", '23.06.1995', 'High', 'The Odin Project'));
 
     //title, desc, due, prio, complete
 
@@ -43,7 +43,7 @@ export const Interface = (() => {
         if(project) {
             const _project = _getProject(project);
             _project.addTodo(_newToDo);
-        }    
+        }
     };
 
     const newProject = (title) => {

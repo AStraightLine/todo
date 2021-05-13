@@ -1,4 +1,5 @@
 import {Interface} from './Interface'
+import {format, formatDistance, formatRelative, subDays} from 'date-fns'
 
 export const UI = (() => {
 
@@ -30,8 +31,12 @@ export const UI = (() => {
     //Area to popualte with clickable project names
     const _projectsContainer = document.getElementById('projectsContainer');
 
+    let _currentProjectSelection;
+
     const initUI = () => {
-        _populateToDoDisplay(Interface.getAllToDos());
+        _currentProjectSelection = Interface.getAllToDos();
+        _highlightProjectSelection('allSelection');
+        _populateToDoDisplay(_currentProjectSelection);
         _populateProjectsDisplay();
         _initListeners();
         _populateToDoFormProjectOptions(Interface.getAllProjects());
@@ -56,6 +61,16 @@ export const UI = (() => {
         });
     };
 
+    const _highlightProjectSelection = (selectionID) => {
+        const selection = document.getElementById(selectionID);
+        selection.classList.toggle('projectSelected');
+    }
+
+    const _removeHighlightProjectSelection = () => {
+        const previousSelected = document.getElementsByClassName('projectSelected');
+        previousSelected.classList.toggle('projectSelection');
+    }
+
     const _openToDoForm = () => {
         _toDoFormModal.style.display = 'flex';
         _toDoFormModal.style.justifyContent = 'center';
@@ -76,11 +91,16 @@ export const UI = (() => {
     const _addToDoSubmit = () => {
         const _titleInput = document.getElementById('toDoTitleInput').value;
         const _DescInput = document.getElementById('toDoDescriptionInput').value;
-        const _dueInput = document.getElementById('toDoDueDateInput').value;
+        let _dueInput = document.getElementById('toDoDueDateInput').valueAsDate;
+        _dueInput = format(_dueInput, 'dd.MM.yyyy');
         const _prioInput = document.getElementById('toDoPrioritySelect').value;
         const _projectInput = document.getElementById('toDoProjectSelect').value;
 
         Interface.newToDo(_titleInput, _DescInput, _dueInput, _prioInput, _projectInput);
+
+        // Update ToDos Display
+        _clearToDosDisplay();
+        _populateToDoDisplay(_currentProjectSelection);
 
         _closeToDoForm();
     }
@@ -113,52 +133,65 @@ export const UI = (() => {
             const _projectTitle = Interface.getAllProjects()[i].getTitle();
             const _project = document.createElement('li');
 
-            _project.setAttribute('id', 'project' + _projectTitle);
+            _project.setAttribute('id', _projectTitle + 'selection');
             _project.classList.add('project');
             _project.textContent = _projectTitle;
             _projectsContainer.appendChild(_project);
         };
     };
 
+    const _clearToDosDisplay = () => {
+        while (_toDosContainer.firstChild) {
+            _toDosContainer.removeChild(_toDosContainer.lastChild);
+        }
+    };
+
     const _populateToDoDisplay = (project) => {
-        for(let i = 0; i < project.length; i++) {
+        // Reverse so newest ToDos at the top
+        for(let i =  project.length; i > 0; i--) {
             // To Do Container
             const _toDoContainer = document.createElement('div');
-            _toDoContainer.setAttribute('id', project[i].getTitle() + 'toDo');
+            _toDoContainer.setAttribute('id', project[i-1].getTitle() + 'toDo');
             _toDoContainer.classList.add('toDoContainer');
 
             // To Do properties
             const _toDoTitle = document.createElement('div');
             _toDoTitle.classList.add('toDoTitle');
-            _toDoTitle.textContent = project[i].getTitle();
+            _toDoTitle.textContent = project[i-1].getTitle();
 
             const _toDoDesc = document.createElement('div');
             _toDoDesc.classList.add('toDoDesc');
-            _toDoDesc.textContent = project[i].getDesc();
+            _toDoDesc.textContent = project[i-1].getDesc();
 
             const _toDoDue = document.createElement('div');
             _toDoDue.classList.add('toDoDue');
-            _toDoDue.textContent = project[i].getDue();
+            _toDoDue.textContent = project[i-1].getDue();
 
-            const _toDoPrio = document.createElement('div');
-            _toDoPrio.classList.add('toDoPrio');
-            _toDoPrio.textContent = project[i].getPrio();
+            // Apply colour switching class based on priority
+            const _toDoPrio = project[i-1].getPrio();
+            switch (_toDoPrio) {
+                case 'Low':
+                case 'low':
+                    _toDoContainer.classList.add('toDoLowPrio');
+                    break;
+                case 'Medium':
+                case 'medium':
+                    _toDoContainer.classList.add('toDoMediumPrio');
+                    break;
+                case 'High':
+                case 'medium:':
+                    _toDoContainer.classList.add('toDoHighPrio');
+                    break;
+            };
 
-            const _toDoProject = document.createElement('div');
-            _toDoProject.classList.add('toDoProject');
-            _toDoProject.textContent = project[i].getProject();
-
-            const _toDoComplete = document.createElement('div');
-            _toDoComplete.classList.add('toDoComplete');
-            _toDoComplete.textContent = project[i].getComplete();
+            // project[i].getComplete();
+            // Change display color based on complete status
+            
 
             // Add Properties to container
             _toDoContainer.appendChild(_toDoTitle);
             _toDoContainer.appendChild(_toDoDesc);
             _toDoContainer.appendChild(_toDoDue);
-            _toDoContainer.appendChild(_toDoPrio);
-            _toDoContainer.appendChild(_toDoProject);
-            _toDoContainer.appendChild(_toDoComplete);
 
             // Add container to DOM
             _toDosContainer.appendChild(_toDoContainer);
