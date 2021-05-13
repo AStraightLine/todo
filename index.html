@@ -24,9 +24,9 @@
                 <div id="todaySelection" class="navTopItem">Today</div>
                 <div id="weekSelection" class="navTopItem">Week</div>
                 <div id="projectsSelection" class="navTopItem">Projects</div>
-                <div id="projectsContainer">
+                <ul id="projectsContainer">
                     <!-- Dynamically populate with project names -->
-                </div>
+                </ul>
                 <div id="newProjectButton" class="navTopItem"><span id="newProjectPlusSymbol">+</span> Add Project</div>
                 <div id="newProjectFormContainer">
                     <form id="newProjectForm">
@@ -44,7 +44,10 @@
             </div>
         </div>
         <div id="mainContentContainer">
-
+            
+            <div id="toDosContainer">
+                <!-- Dynamically populate with ToDos based on project select (default 'All') -->
+            </div>
         </div>
     </div>
     <div id="toDoFormModal">
