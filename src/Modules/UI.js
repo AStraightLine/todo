@@ -24,7 +24,15 @@ export const UI = (() => {
     // Project form inputs
     const _projectNameInput = document.getElementById('projectNameInput');
 
+    // Area to populate with ToDos based on project selection (default 'All')
+    const _toDosContainer = document.getElementById('toDosContainer');
+
+    //Area to popualte with clickable project names
+    const _projectsContainer = document.getElementById('projectsContainer');
+
     const initUI = () => {
+        _populateToDoDisplay(Interface.getAllToDos());
+        _populateProjectsDisplay();
         _initListeners();
     };
 
@@ -87,8 +95,62 @@ export const UI = (() => {
     };
 
     const _addProjectSubmit = () => {
-        // working time to implement
+        const _titleInput = document.getElementById('projectNameInput').value;
+        Interface.newProject(_titleInput);
+        
         _closeNewProjectForm();
+    };
+
+    const _populateProjectsDisplay = () => {
+        for(let i = 0; i < Interface.getAllProjects().length; i++) {
+            const _projectTitle = Interface.getAllProjects()[i].getTitle();
+            const _project = document.createElement('li');
+
+            _project.setAttribute('id', 'project' + _projectTitle);
+            _project.classList.add('project');
+            _project.textContent = _projectTitle;
+            _projectsContainer.appendChild(_project);
+        };
+    };
+
+    const _populateToDoDisplay = (project) => {
+        for(let i = 0; i < project.length; i++) {
+            // To Do Container
+            const _toDoContainer = document.createElement('div');
+            _toDoContainer.setAttribute('id', project[i].getTitle() + 'toDo');
+            _toDoContainer.classList.add('toDoContainer');
+
+            // To Do properties
+            const _toDoTitle = document.createElement('div');
+            _toDoTitle.classList.add('toDoTitle');
+            _toDoTitle.textContent = project[i].getTitle();
+
+            const _toDoDesc = document.createElement('div');
+            _toDoDesc.classList.add('toDoDesc');
+            _toDoDesc.textContent = project[i].getDesc();
+
+            const _toDoDue = document.createElement('div');
+            _toDoDue.classList.add('toDoDue');
+            _toDoDue.textContent = project[i].getDue();
+
+            const _toDoPrio = document.createElement('div');
+            _toDoPrio.classList.add('toDoPrio');
+            _toDoPrio.textContent = project[i].getPrio();
+
+            const _toDoComplete = document.createElement('div');
+            _toDoComplete.classList.add('toDoComplete');
+            _toDoComplete.textContent = project[i].getComplete();
+
+            // Add Properties to container
+            _toDoContainer.appendChild(_toDoTitle);
+            _toDoContainer.appendChild(_toDoDesc);
+            _toDoContainer.appendChild(_toDoDue);
+            _toDoContainer.appendChild(_toDoPrio);
+            _toDoContainer.appendChild(_toDoComplete);
+
+            // Add container to DOM
+            _toDosContainer.appendChild(_toDoContainer);
+        };
     };
 
     return {

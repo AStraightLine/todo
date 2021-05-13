@@ -95,18 +95,24 @@ h1 {
     font-style: italic;
 }
 
+#projectsContainer {
+    width: 150px;
+    display: flex;
+    align-self: flex-end;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.project {
+    font-size: 16px;
+}
+
 #newProjectButton {
     font-size: 18px;
 }
 
 #newProjectPlusSymbol {
     font-size: 32px;
-}
-
-#projectsContainer {
-    width: 150px;
-    
-    border: 1px solid black;
 }
 
 #newProjectFormContainer {
@@ -214,4 +220,35 @@ h1 {
 
 #mainContentContainer {
     flex: 1 1 auto;
+}
+
+#toDosContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.toDoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.toDoTitle {
+
+}
+
+.toDoDesc {
+
+}
+
+.toDoDue {
+
+}
+
+.toDoPrio {
+
+}
+
+.toDoComplete {
+
 }

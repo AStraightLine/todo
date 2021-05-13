@@ -1,4 +1,4 @@
-const ToDo = (title, desc, due, prio, complete) => {
+export const ToDo = (title, desc, due, prio, complete) => {
     let _title = title;
     let _desc = desc;
     let _due = due;
