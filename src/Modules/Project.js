@@ -1,7 +1,7 @@
 export const Project = (title) => {
 
     let _title = title;
-    let _Todos = [];
+    let _ToDos = [];
     
 
     const setTitle = (newTitle) => {
@@ -10,16 +10,16 @@ export const Project = (title) => {
 
     const getTitle = () => _title;
 
-    const addTodo = (newTodo) => {
-        _Todos.push(newTodo);
+    const addToDo = (newTodo) => {
+        _ToDos.push(newTodo);
     }
 
-    const getToDos = () => _Todos;
+    const getToDos = () => _ToDos;
 
     return {
         setTitle,
         getTitle,
-        addTodo,
+        addToDo,
         getToDos,
     }
 }

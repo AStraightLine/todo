@@ -16,6 +16,11 @@ export const UI = (() => {
     // ToDo form inputs
     const _toDoTitleInput = document.getElementById('toDoTitleInput');
 
+    // Default Projects
+    const _allProject = document.getElementById('_allToDos');
+    const _todayProject = document.getElementById('todaySelection');
+    const _weekProject = document.getElementById('weekSelection');
+
     // Project form containers and buttons
     const _newProjectForm = document.getElementById('newProjectForm');
     const _newProjectFormContainer = document.getElementById('newProjectFormContainer');
@@ -34,9 +39,9 @@ export const UI = (() => {
     let _currentProjectSelection;
 
     const initUI = () => {
-        _currentProjectSelection = Interface.getAllToDos();
-        _highlightProjectSelection('allSelection');
-        _populateToDoDisplay(_currentProjectSelection);
+        _currentProjectSelection = '_allToDos';
+        _highlightProjectSelection('_allToDos');
+        _populateToDoDisplay(Interface.getProject(_currentProjectSelection));
         _populateProjectsDisplay();
         _initListeners();
         _populateToDoFormProjectOptions(Interface.getAllProjects());
@@ -50,6 +55,20 @@ export const UI = (() => {
         _clearNewProjectFormButton.addEventListener('click', _clearNewProjectFormFields);
         _closeFormButton.addEventListener('click', _closeNewProjectForm);
 
+        // Default Project selectors
+        _allProject.addEventListener('click', function(e) {
+            _projectSelectionHandler(e);
+        });
+
+        _todayProject.addEventListener('click', function(e) {
+            _projectSelectionHandler(e);
+        });
+
+        _weekProject.addEventListener('click', function(e) {
+            _projectSelectionHandler(e);
+        });
+
+        // Form submits
         _newToDoForm.addEventListener('submit', function(e) {
             _addToDoSubmit();
             e.preventDefault();
@@ -61,14 +80,30 @@ export const UI = (() => {
         });
     };
 
+    const _projectSelectionHandler = (e) => {
+        _removeHighlightProjectSelection();
+        _highlightProjectSelection(e.target.id);
+        const _projectTitle = e.target.id.replace('selection', '');
+        let _project;
+        if (_projectTitle == '_allToDos') {
+            _project = Interface.getProject(_projectTitle);
+        } else {
+            _project = Interface.getProject(_projectTitle).getToDos();
+        }
+        _currentProjectSelection = _projectTitle;
+        
+        _clearToDosDisplay();
+        _populateToDoDisplay(_project);
+    }
+
     const _highlightProjectSelection = (selectionID) => {
-        const selection = document.getElementById(selectionID);
-        selection.classList.toggle('projectSelected');
+        const _selection = document.getElementById(selectionID);
+        _selection.classList.add('projectSelected');
     }
 
     const _removeHighlightProjectSelection = () => {
-        const previousSelected = document.getElementsByClassName('projectSelected');
-        previousSelected.classList.toggle('projectSelection');
+        const _previousSelected = document.getElementsByClassName('projectSelected');
+        _previousSelected[0].classList.remove('projectSelected');
     }
 
     const _openToDoForm = () => {
@@ -97,10 +132,10 @@ export const UI = (() => {
         const _projectInput = document.getElementById('toDoProjectSelect').value;
 
         Interface.newToDo(_titleInput, _DescInput, _dueInput, _prioInput, _projectInput);
-
+        
         // Update ToDos Display
         _clearToDosDisplay();
-        _populateToDoDisplay(_currentProjectSelection);
+        _populateToDoDisplay(Interface.getProject(_currentProjectSelection));
 
         _closeToDoForm();
     }
@@ -133,7 +168,11 @@ export const UI = (() => {
             const _projectTitle = Interface.getAllProjects()[i].getTitle();
             const _project = document.createElement('li');
 
-            _project.setAttribute('id', _projectTitle + 'selection');
+            _project.addEventListener('click', function(e) {
+                _projectSelectionHandler(e);
+            });
+
+            _project.setAttribute('id', _projectTitle);
             _project.classList.add('project');
             _project.textContent = _projectTitle;
             _projectsContainer.appendChild(_project);
