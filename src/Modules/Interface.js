@@ -20,6 +20,33 @@ export const Interface = (() => {
         _allProjects.push(newProject);
     };
 
+    const removeToDo = (toDo) => {
+        console.log(toDo);
+        for (let i = 0; i < _allToDos.length; i++) {
+            if (_allToDos[i].getTitle() == toDo) {
+                _allToDos.splice(i, 1);
+            }
+        }
+        for (let i = 0; i < _todayToDos.length; i++) {
+            if (_todayToDos[i].getTitle() == toDo) {
+                _todayToDos.splice(i, 1);
+            }
+        }
+        for (let i = 0; i < _allProjects.length; i++) {
+            for (let j = 0; j < _allProjects[i].getToDos().length; j++) {
+                if (_allProjects[i].getToDos()[j].getTitle() == toDo) {
+                    _allProjects[i].removeToDo(toDo);
+                }
+            }
+        }
+    };
+
+    /*for (let i = 0; i < _ToDos.length; i++) {
+            if (_ToDos[i].getTitle() == toDo) {
+                _ToDos = _ToDos.splice(i, 1);
+            }
+        }*/
+
     const getProject = (project) => {
         if (project == '_allToDos' || project == '') {
             return _allToDos;
@@ -71,5 +98,6 @@ export const Interface = (() => {
         getAllToDos,
         getAllProjects,
         getProject,
+        removeToDo,
     };
 })();

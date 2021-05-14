@@ -75,17 +75,30 @@ export const UI = (() => {
         });
     };
 
+    const _getCurrentProject = () => {
+        let _project;
+        if (_currentProjectSelection == '_allToDos' || _currentProjectSelection == '_todayToDos' || _currentProjectSelection == '_weekToDos') {
+            _project = Interface.getProject(_currentProjectSelection);
+        } else {
+            _project = Interface.getProject(_currentProjectSelection).getToDos();
+        }
+        return _project;
+    };
+
+    const _toDoDeleteHandler = (e) => {
+        const _toDo = e.target.id.replace('Delete', '');
+        Interface.removeToDo(_toDo);
+        let _project = _getCurrentProject();
+        _clearToDosDisplay();
+        _populateToDoDisplay(_project);
+    };
+
     const _projectSelectionHandler = (e) => {
         _removeHighlightProjectSelection();
         _highlightProjectSelection(e.target.id);
         const _projectTitle = e.target.id.replace('selection', '');
-        let _project;
-        if (_projectTitle == '_allToDos' || _projectTitle == '_todayToDos' || _projectTitle == '_weekToDos') {
-            _project = Interface.getProject(_projectTitle);
-        } else {
-            _project = Interface.getProject(_projectTitle).getToDos();
-        }
         _currentProjectSelection = _projectTitle;
+        let _project = _getCurrentProject();
         
         _clearToDosDisplay();
         _populateToDoDisplay(_project);
@@ -212,13 +225,15 @@ export const UI = (() => {
             _toDoTitle.classList.add('toDoTitle');
             _toDoTitle.textContent = project[i-1].getTitle();
 
-            const _toDoDesc = document.createElement('div');
-            _toDoDesc.classList.add('toDoDesc');
-            _toDoDesc.textContent = project[i-1].getDesc();
-
             const _toDoDue = document.createElement('div');
             _toDoDue.classList.add('toDoDue');
             _toDoDue.textContent = project[i-1].getDue();
+
+            // Delete ToDo button
+            const _toDoDelete = document.createElement('button');
+            _toDoDelete.classList.add('toDoDelete');
+            _toDoDelete.setAttribute('id', project[i-1].getTitle() + 'Delete');
+            _toDoDelete.textContent = 'X';
 
             // Apply colour switching class based on priority
             const _toDoPrio = project[i-1].getPrio();
@@ -237,17 +252,21 @@ export const UI = (() => {
                     break;
             };
 
-            // project[i].getComplete();
-            // Change display color based on complete status
-            
-
             // Add Properties to container
             _toDoContainer.appendChild(_toDoTitle);
-            _toDoContainer.appendChild(_toDoDesc);
             _toDoContainer.appendChild(_toDoDue);
+            _toDoContainer.appendChild(_toDoDelete);
 
             // Add container to DOM
             _toDosContainer.appendChild(_toDoContainer);
+
+            // Add eventlisteners for deleting ToDo
+            _toDoDelete.addEventListener('click', function(e) {
+                _toDoDeleteHandler(e);
+            });
+
+            // Add eventlisteners for opening ToDo details
+
         };
     };
 
