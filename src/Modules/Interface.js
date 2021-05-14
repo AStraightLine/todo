@@ -10,7 +10,6 @@ export const Interface = (() => {
     let _allToDos = [];
     let _allProjects = [];
     let _todayToDos = [];
-    let _weekToDos = [];
 
     // add new Todo and Project objects to array of Todos and Projects after they've been created.
     const _addToDo = (newTodo) => {
@@ -26,8 +25,6 @@ export const Interface = (() => {
             return _allToDos;
         } else if (project == '_todayToDos') {
             return _todayToDos;
-        } else if (project == '_weekToDos') {
-            return _weekToDos;
         } else {
             for(let i = 0; i < _allProjects.length; i++) {
                 if(_allProjects[i].getTitle() == project) {
@@ -49,6 +46,7 @@ export const Interface = (() => {
         if (due == today) {
             _todayToDos.push(_newToDo);
         }
+
     };
 
     const newProject = (title) => {
@@ -65,7 +63,7 @@ export const Interface = (() => {
     // And populate those with some toDos
     newToDo('Wake up', 'Get up now.', '23.06.1995', 'High', 'Daily Routine');
     newToDo('Brush teeth', 'Do it Well, do it often.', '23.06.1995', 'High', 'Daily Routine');
-    newToDo('Make this app', "It won't make itself.", '23.06.1995', 'High', 'The Odin Project');
+    newToDo('Make this app', "It won't make itself.", format(new Date(), 'dd.MM.yyyy'), 'High', 'The Odin Project');
 
     return {
         newToDo,

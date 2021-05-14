@@ -19,7 +19,6 @@ export const UI = (() => {
     // Default Projects
     const _allProject = document.getElementById('_allToDos');
     const _todayProject = document.getElementById('_todayToDos');
-    const _weekProject = document.getElementById('_weekToDos');
 
     // Project form containers and buttons
     const _newProjectForm = document.getElementById('newProjectForm');
@@ -61,10 +60,6 @@ export const UI = (() => {
         });
 
         _todayProject.addEventListener('click', function(e) {
-            _projectSelectionHandler(e);
-        });
-
-        _weekProject.addEventListener('click', function(e) {
             _projectSelectionHandler(e);
         });
 
@@ -159,8 +154,20 @@ export const UI = (() => {
     const _addProjectSubmit = () => {
         const _titleInput = document.getElementById('projectNameInput').value;
         Interface.newProject(_titleInput);
-        
+
+        _clearProjectsDisplay();
+        _populateProjectsDisplay();
+        _clearToDoFormProjectOptions();
+        _populateToDoFormProjectOptions(Interface.getAllProjects());
+
         _closeNewProjectForm();
+    };
+
+    const _clearProjectsDisplay = () => {
+        const _projectsContainer = document.getElementById('projectsContainer');
+        while(_projectsContainer.firstChild) {
+            _projectsContainer.removeChild(_projectsContainer.lastChild);
+        }
     };
 
     const _populateProjectsDisplay = () => {
@@ -182,6 +189,13 @@ export const UI = (() => {
     const _clearToDosDisplay = () => {
         while (_toDosContainer.firstChild) {
             _toDosContainer.removeChild(_toDosContainer.lastChild);
+        }
+    };
+
+    const _clearToDoFormProjectOptions = () => {
+        const _toDoProjectSelect = document.getElementById('toDoProjectSelect');
+        while(_toDoProjectSelect.firstChild) {
+            _toDoProjectSelect.removeChild(_toDoProjectSelect.lastChild);
         }
     };
 
@@ -239,6 +253,9 @@ export const UI = (() => {
 
     const _populateToDoFormProjectOptions = (projects) => {
         const _toDoProjectSelect = document.getElementById('toDoProjectSelect');
+        const _selectNullOption = document.createElement('option');
+        _selectNullOption.setAttribute('value', '');
+        _toDoProjectSelect.appendChild(_selectNullOption);
 
         for (let i = 0; i < projects.length; i++) {
             const _selectProjectOption = document.createElement('option');
