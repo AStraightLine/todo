@@ -18,8 +18,8 @@ export const UI = (() => {
 
     // Default Projects
     const _allProject = document.getElementById('_allToDos');
-    const _todayProject = document.getElementById('todaySelection');
-    const _weekProject = document.getElementById('weekSelection');
+    const _todayProject = document.getElementById('_todayToDos');
+    const _weekProject = document.getElementById('_weekToDos');
 
     // Project form containers and buttons
     const _newProjectForm = document.getElementById('newProjectForm');
@@ -85,7 +85,7 @@ export const UI = (() => {
         _highlightProjectSelection(e.target.id);
         const _projectTitle = e.target.id.replace('selection', '');
         let _project;
-        if (_projectTitle == '_allToDos') {
+        if (_projectTitle == '_allToDos' || _projectTitle == '_todayToDos' || _projectTitle == '_weekToDos') {
             _project = Interface.getProject(_projectTitle);
         } else {
             _project = Interface.getProject(_projectTitle).getToDos();

@@ -1,6 +1,7 @@
 import {Project} from './Project'
 import {ToDo} from './ToDo'
 import {UI} from './UI'
+import {format, formatDistance, formatRelative, subDays} from 'date-fns'
 
 // Middle man between UI, Projects and ToDos
 // Perhaps more of a controller too.
@@ -8,6 +9,8 @@ export const Interface = (() => {
 
     let _allToDos = [];
     let _allProjects = [];
+    let _todayToDos = [];
+    let _weekToDos = [];
 
     // add new Todo and Project objects to array of Todos and Projects after they've been created.
     const _addToDo = (newTodo) => {
@@ -21,6 +24,10 @@ export const Interface = (() => {
     const getProject = (project) => {
         if (project == '_allToDos' || project == '') {
             return _allToDos;
+        } else if (project == '_todayToDos') {
+            return _todayToDos;
+        } else if (project == '_weekToDos') {
+            return _weekToDos;
         } else {
             for(let i = 0; i < _allProjects.length; i++) {
                 if(_allProjects[i].getTitle() == project) {
@@ -37,6 +44,10 @@ export const Interface = (() => {
         if(project) {
             const _project = getProject(project);
             _project.addToDo(_newToDo);
+        }
+        const today = format(new Date(), 'dd.MM.yyyy');
+        if (due == today) {
+            _todayToDos.push(_newToDo);
         }
     };
 
