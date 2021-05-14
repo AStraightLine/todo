@@ -238,6 +238,11 @@ h1 {
     flex: 0 1 auto;
     padding: 5px;
     border-bottom: 1px solid black;
+    align-items: center;
+}
+
+.toDoContainer:hover {
+    background-color: lightgrey;
 }
 
 .toDoTitle {
@@ -256,6 +261,16 @@ h1 {
 .toDoDue {
     flex-grow: 1;
     flex-basis: 0;
+    font-size: 18px;
+}
+
+.toDoDelete {
+    width: 25px;
+    height: 25px;
+    font-size: 20px;
+    font-weight: 500;
+    background-color: white;
+    border: 1px solid grey;
 }
 
 .toDoComplete {
