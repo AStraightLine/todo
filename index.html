@@ -49,6 +49,7 @@
             </div>
         </div>
     </div>
+    <!-- Add toDo form modal -->
     <div id="toDoFormModal">
         <div id="popupBody">
             <div id="formTitle">Add ToDo</div>
@@ -77,9 +78,9 @@
                             Priority
                         </label>
                         <select name="toDoPriority" id="toDoPrioritySelect" class="toDoFormInput">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
                         </select>
                     </div>
                     <div id="toDoFormProjectSelectContainer" class="formElementContainer">
@@ -95,6 +96,59 @@
                             <button type="button" id="closeToDoFormButton" class="toDoFormControllButton">Close</button>
                             <button type="button" id="clearToDoFieldsButton" class="toDoFormControllButton">Clear</button>
                             <input id="addProjectButton" class="toDoFormControllButton" type="submit" value="Add">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Edit toDo form modal -->
+    <div id="toDoEditFormModal">
+        <div id="editPopupBody">
+            <div id="editFormTitle">Edit ToDo</div>
+            <div id="editFormContainer">
+                <form id="editToDoForm">
+                    <div class="formElementContainer">
+                        <label for="editToDoTitle" class="toDoFormLabel">
+                            Title
+                        </label>
+                        <input type="text" name="editToDoTitle" id="editToDoTitleInput" class="toDoFormInput">
+                    </div>
+                    <div class="formElementContainer">
+                        <label for="editToDoDescription" class="toDoFormLabel">
+                            Description
+                        </label>
+                        <input type="text" name="editToDoDescription" id="editToDoDescriptionInput" class="toDoFormInput">
+                    </div>
+                    <div class="formElementContainer">
+                        <label for="editToDoDueDate" class="toDoFormLabel">
+                            Due
+                        </label>
+                        <input type="date" name="editToDoDueDate" id="editToDoDueDateInput" class="toDoFormInput">
+                    </div>
+                    <div class="formElementContainer">
+                        <label for="editToDoPriority" class="toDoFormLabel">
+                            Priority
+                        </label>
+                        <select name="editToDoPriority" id="editToDoPrioritySelect" class="toDoFormInput">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    <div id="editToDoFormProjectSelectContainer" class="formElementContainer">
+                        <label for="editToDoProject" class="toDoFormLabel">
+                            Project
+                        </label>
+                        <select name="editToDoProject" id="editToDoProjectSelect" class="toDoFormInput">
+                            <!-- Dynamically add available projects for user to select from - default is 'All' and will be added to any other in addition to this -->
+                        </select>
+                    </div>
+                    <div class="formElementContainer">
+                        <div id="editToDoFormControllButtonsContainer">
+                            <button type="button" id="editCloseToDoFormButton" class="toDoFormControllButton">Close</button>
+                            <button type="button" id="editClearToDoFieldsButton" class="toDoFormControllButton">Clear</button>
+                            <input id="editProjectButton" class="toDoFormControllButton" type="submit" value="Add">
                         </div>
                     </div>
                 </form>
