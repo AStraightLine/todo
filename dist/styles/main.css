@@ -221,6 +221,47 @@ h1 {
     filter: drop-shadow(0.1em 0.1em 0.1em rgba(25, 25, 25, 0.7));
 }
 
+#toDoEditFormModal {
+    display: none;
+    position: absolute;
+    top: 0;
+    z-index: 9;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#editPopupBody {
+    width: 375px;
+    height: 550px;
+    background-color: white;
+    border-radius: 10px;
+    filter: drop-shadow(0.3em 0.3em 0.3em rgba(25, 25, 25, 0.5));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#editFormTitle {
+    font-size: 22px;
+    line-height: 100px;
+}
+
+#editToDoForm {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#editToDoFormControllButtonsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 #mainContentContainer {
     display: flex;
     flex: 1 1 auto;
@@ -232,6 +273,11 @@ h1 {
     flex: 1 1 auto;
 }
 
+.toDoOuterContainer {
+    display: flex;
+    flex-direction: column;
+}
+
 .toDoContainer {
     display: flex;
     flex-direction: row;
@@ -241,15 +287,10 @@ h1 {
     align-items: center;
 }
 
-.toDoContainer:hover {
-    background-color: lightgrey;
-}
-
 .toDoTitle {
     flex-grow: 1;
     flex-basis: 0;
     font-size: 18px;
-    font-weight: 500;
 }
 
 .toDoDesc {
@@ -267,24 +308,58 @@ h1 {
 .toDoDelete {
     width: 25px;
     height: 25px;
-    font-size: 20px;
-    font-weight: 500;
-    background-color: white;
-    border: 1px solid grey;
+}
+
+.toDoDeleteImage {
+    width: 25px;
+    height: 25px;
+}
+
+.toDoEdit {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+.toDoEditImage {
+    width: 25px;
+    height: 25px;
 }
 
 .toDoComplete {
-    
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+
+.toDoPrio {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    margin-right: 5px;
 }
 
 .toDoLowPrio {
-    
+    background-color: #238823;
 }
 
 .toDoMediumPrio {
-    
+    background-color: #FFBF00;
 }
 
 .toDoHighPrio{
-    
+    background-color: #D2222D;
+}
+
+.toDoCompleted {
+    background-color: #6FF36D;
+}
+
+.toDoCompleteImg {
+    width: 25px;
+    height: 25px;
+}
+
+.toDoContainer:hover {
+    font-weight: 900;
 }

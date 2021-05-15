@@ -1,8 +1,9 @@
-export const ToDo = (title, desc, due, prio, project) => {
+export const ToDo = (title, desc, due, prio, formDue, project) => {
     let _title = title;
     let _desc = desc;
     let _due = due;
     let _prio = prio;
+    let _formDue = formDue;
     let _project = project;
     let _complete = false;
 
@@ -23,6 +24,10 @@ export const ToDo = (title, desc, due, prio, project) => {
         _prio = newPrio;
     };
 
+    const setFormDue = (newFormDue) => {
+        _formDue = newFormDue;
+    };
+
     const setProject = (newProject) => {
         project = newProject;
     };
@@ -36,6 +41,7 @@ export const ToDo = (title, desc, due, prio, project) => {
     const getDesc = () => _desc;
     const getDue = () => _due;
     const getPrio = () => _prio;
+    const getFormDue = () => _formDue;
     const getProject = () => _project;
     const getComplete = () => _complete;
 
@@ -44,12 +50,14 @@ export const ToDo = (title, desc, due, prio, project) => {
         setDesc,
         setDue,
         setPrio,
+        setFormDue,
         setProject,
         setComplete,
         getTitle,
         getDesc,
         getDue,
         getPrio,
+        getFormDue,
         getProject,
         getComplete,
     };

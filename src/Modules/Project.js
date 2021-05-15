@@ -15,11 +15,7 @@ export const Project = (title) => {
     };
 
     const removeToDo = (toDo) => {
-        for (let i = 0; i < _ToDos.length; i++) {
-            if (_ToDos[i].getTitle() == toDo) {
-                _ToDos.splice(i, 1);
-            }
-        }
+        _ToDos = _ToDos.filter(title => !(title.getTitle() == toDo));
     };
 
     const getToDos = () => _ToDos;

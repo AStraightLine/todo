@@ -15,6 +15,10 @@ export const UI = (() => {
 
     // ToDo form inputs
     const _toDoTitleInput = document.getElementById('toDoTitleInput');
+    const _toDoDescriptionInput = document.getElementById('toDoDescriptionInput');
+    const _toDoDueDateInput = document.getElementById('toDoDueDateInput');
+    const _toDoPrioritySelect = document.getElementById('toDoPrioritySelect');
+    const _toDoProjectSelect = document.getElementById('toDoProjectSelect');
 
     // Default Projects
     const _allProject = document.getElementById('_allToDos');
@@ -35,7 +39,21 @@ export const UI = (() => {
     //Area to popualte with clickable project names
     const _projectsContainer = document.getElementById('projectsContainer');
 
+    // Edit form containers and buttons
+    const _editToDoForm = document.getElementById('editToDoForm');
+    const _toDoEditFormModal = document.getElementById('toDoEditFormModal');
+    const _editCloseToDoFormButton = document.getElementById('editCloseToDoFormButton');
+    const _editClearToDoFieldsButton = document.getElementById('editClearToDoFieldsButton');
+
+    // Edit form inputs
+    const _editToDoTitleInput = document.getElementById('editToDoTitleInput');
+    const _editToDoDescriptionInput = document.getElementById('editToDoDescriptionInput');
+    const _editToDoDueDateInput = document.getElementById('editToDoDueDateInput');
+    const _editToDoPrioritySelect = document.getElementById('editToDoPrioritySelect');
+    const _editToDoProjectSelect = document.getElementById('editToDoProjectSelect');
+
     let _currentProjectSelection;
+    let _editingToDo;
 
     const initUI = () => {
         _currentProjectSelection = '_allToDos';
@@ -44,6 +62,7 @@ export const UI = (() => {
         _populateProjectsDisplay();
         _initListeners();
         _populateToDoFormProjectOptions(Interface.getAllProjects());
+        _populateEditToDoFormProjectOptions(Interface.getAllProjects());
     };
 
     const _initListeners = () => {
@@ -53,6 +72,8 @@ export const UI = (() => {
         _newProjectButton.addEventListener('click', _openNewProjectForm);
         _clearNewProjectFormButton.addEventListener('click', _clearNewProjectFormFields);
         _closeFormButton.addEventListener('click', _closeNewProjectForm);
+        _editCloseToDoFormButton.addEventListener('click', _closeEditForm);
+        _editClearToDoFieldsButton.addEventListener('click', _clearEditForm);
 
         // Default Project selectors
         _allProject.addEventListener('click', function(e) {
@@ -73,6 +94,11 @@ export const UI = (() => {
             _addProjectSubmit();
             e.preventDefault();
         });
+
+        _editToDoForm.addEventListener('submit', function(e) {
+            _editProjectSubmit();
+            e.preventDefault();
+        });
     };
 
     const _getCurrentProject = () => {
@@ -91,6 +117,15 @@ export const UI = (() => {
         let _project = _getCurrentProject();
         _clearToDosDisplay();
         _populateToDoDisplay(_project);
+    };
+
+    const _toDoCompleteHandler = (e) => {
+        let _targetToDo = (e.target.id.replace('Complete', 'toDo'));
+        let _targetElement = document.getElementById(_targetToDo);
+        _targetElement.classList.toggle('toDoCompleted');
+        _targetToDo = _targetToDo.replace('toDo', 'Prio');
+        _targetElement = document.getElementById(_targetToDo);
+        _targetElement.classList.toggle('toDoCompleted');
     };
 
     const _projectSelectionHandler = (e) => {
@@ -128,24 +163,92 @@ export const UI = (() => {
     const _clearToDoForm = () => {
         _toDoTitleInput.textContent = null;
         _toDoTitleInput.value = null;
-        // If more inputs are added later, clear them too. 
+        _toDoDescriptionInput.textContent = null;
+        _toDoDescriptionInput.value =  null;
+        _toDoDueDateInput.value = null;
+        _toDoPrioritySelect.value = null;
+        _toDoProjectSelect. value = null;
     }
 
     const _addToDoSubmit = () => {
         const _titleInput = document.getElementById('toDoTitleInput').value;
         const _DescInput = document.getElementById('toDoDescriptionInput').value;
+        let _formDue = document.getElementById('toDoDueDateInput').value;
         let _dueInput = document.getElementById('toDoDueDateInput').valueAsDate;
         _dueInput = format(_dueInput, 'dd.MM.yyyy');
         const _prioInput = document.getElementById('toDoPrioritySelect').value;
         const _projectInput = document.getElementById('toDoProjectSelect').value;
 
-        Interface.newToDo(_titleInput, _DescInput, _dueInput, _prioInput, _projectInput);
+        Interface.newToDo(_titleInput, _DescInput, _dueInput, _prioInput, _formDue, _projectInput);
         
         // Update ToDos Display
         _clearToDosDisplay();
         _populateToDoDisplay(Interface.getProject(_currentProjectSelection));
 
         _closeToDoForm();
+    }
+
+    const _editProjectSubmit = () => {
+        // Delete Old version
+        Interface.removeToDo(_editingToDo);
+
+        // Create new version
+        const _editTitleInput = _editToDoTitleInput.value;
+        const _editDescInput = _editToDoDescriptionInput.value;
+        let _editFormDue = _editToDoDueDateInput.value;
+        let _editDueInput = _editToDoDueDateInput.valueAsDate;
+        _editDueInput = format(_editDueInput, 'dd.MM.yyyy');
+        const _editPrioInput = _editToDoPrioritySelect.value;
+        const _editProjectInput = _editToDoProjectSelect.value;
+
+        Interface.newToDo(_editTitleInput, _editDescInput, _editDueInput, _editPrioInput, _editFormDue, _editProjectInput);
+        
+        // Update ToDos Display
+        _clearToDosDisplay();
+        _populateToDoDisplay(Interface.getProject(_currentProjectSelection));
+
+        _closeEditForm();
+    }
+
+    const _toDoEditHandler = (e) => {
+        let _targetToDo = e.target.id.replace('Edit', '');
+        _editingToDo = _targetToDo;
+        // Find the todo
+        for (let i = 0; i < Interface.getAllToDos().length; i++) {
+            if (Interface.getAllToDos()[i].getTitle() == _targetToDo) {
+                _targetToDo = Interface.getAllToDos()[i];
+            }
+        }
+
+        // set form input values to current project values
+        _editToDoTitleInput.value = _targetToDo.getTitle();
+        _editToDoDescriptionInput.value = _targetToDo.getDesc();
+        _editToDoDueDateInput.value = _targetToDo.getFormDue();
+        _editToDoPrioritySelect.value = _targetToDo.getPrio();
+        _editToDoProjectSelect. value = _targetToDo.getProject();
+
+        _openEditToDoForm(_targetToDo);
+    };
+
+    const _openEditToDoForm = () => {
+        _toDoEditFormModal.style.display = 'flex';
+        _toDoEditFormModal.style.justifyContent = 'center';
+        _toDoEditFormModal.style.alignItems = 'center';
+    }
+
+    const _closeEditForm = () => {
+        _toDoEditFormModal.style.display = 'none';
+        _clearEditForm();
+    }
+
+    const _clearEditForm = () => {
+        _editToDoTitleInput.textContent = null;
+        _editToDoTitleInput.value = null;
+        _editToDoDescriptionInput.textContent = null;
+        _editToDoDescriptionInput.value =  null;
+        _editToDoDueDateInput.value = null;
+        _editToDoPrioritySelect.value = null;
+        _editToDoProjectSelect. value = null;
     }
 
     const _openNewProjectForm = () => {
@@ -172,6 +275,8 @@ export const UI = (() => {
         _populateProjectsDisplay();
         _clearToDoFormProjectOptions();
         _populateToDoFormProjectOptions(Interface.getAllProjects());
+        _clearEditToDoFormProjectOptions();
+        _populateEditToDoFormProjectOptions(Interface.getAllProjects());
 
         _closeNewProjectForm();
     };
@@ -212,9 +317,17 @@ export const UI = (() => {
         }
     };
 
+    const _clearEditToDoFormProjectOptions = () => {
+        const _toDoProjectSelect = document.getElementById('editToDoProjectSelect');
+        while(_toDoProjectSelect.firstChild) {
+            _toDoProjectSelect.removeChild(_toDoProjectSelect.lastChild);
+        }
+    };
+
     const _populateToDoDisplay = (project) => {
         // Reverse so newest ToDos at the top
         for(let i =  project.length; i > 0; i--) {
+
             // To Do Container
             const _toDoContainer = document.createElement('div');
             _toDoContainer.setAttribute('id', project[i-1].getTitle() + 'toDo');
@@ -229,32 +342,59 @@ export const UI = (() => {
             _toDoDue.classList.add('toDoDue');
             _toDoDue.textContent = project[i-1].getDue();
 
+            // Edit
+            const _toDoEditButton = document.createElement('div');
+            _toDoEditButton.classList.add('toDoEdit');
+            const _editImage = document.createElement('img');
+            _editImage.setAttribute('src', './resources/editIcon.png');
+            _editImage.setAttribute('id', project[i-1].getTitle() + 'Edit');
+            _editImage.classList.add('toDoEditImage');
+            _toDoEditButton.appendChild(_editImage);
+
             // Delete ToDo button
-            const _toDoDelete = document.createElement('button');
+            const _toDoDelete = document.createElement('div');
             _toDoDelete.classList.add('toDoDelete');
-            _toDoDelete.setAttribute('id', project[i-1].getTitle() + 'Delete');
-            _toDoDelete.textContent = 'X';
+            const _deleteImage = document.createElement('img');
+            _deleteImage.setAttribute('src', './resources/deleteIcon.png');
+            _deleteImage.setAttribute('id', project[i-1].getTitle() + 'Delete');
+            _deleteImage.classList.add('toDoDeleteImage');
+            _toDoDelete.appendChild(_deleteImage);
 
             // Apply colour switching class based on priority
             const _toDoPrio = project[i-1].getPrio();
+            const _toDoPrioDisplay = document.createElement('div');
+            _toDoPrioDisplay.setAttribute('id', project[i-1].getTitle() + 'Prio');
+            _toDoPrioDisplay.classList.add('toDoPrio');
             switch (_toDoPrio) {
                 case 'Low':
                 case 'low':
-                    _toDoContainer.classList.add('toDoLowPrio');
+                    _toDoPrioDisplay.classList.add('toDoLowPrio');
                     break;
                 case 'Medium':
                 case 'medium':
-                    _toDoContainer.classList.add('toDoMediumPrio');
+                    _toDoPrioDisplay.classList.add('toDoMediumPrio');
                     break;
                 case 'High':
                 case 'medium:':
-                    _toDoContainer.classList.add('toDoHighPrio');
+                    _toDoPrioDisplay.classList.add('toDoHighPrio');
                     break;
             };
+
+            const _toDoComplete = document.createElement('div');
+            _toDoComplete.classList.add('toDoComplete');
+            const _toDoCompleteIcon = document.createElement('img');
+            _toDoCompleteIcon.setAttribute('src', './resources/tickIcon.png');
+            _toDoCompleteIcon.setAttribute('id', project[i-1].getTitle() + 'Complete');
+            _toDoCompleteIcon.classList.add('toDoCompleteImg');
+            _toDoComplete.appendChild(_toDoCompleteIcon);
+
 
             // Add Properties to container
             _toDoContainer.appendChild(_toDoTitle);
             _toDoContainer.appendChild(_toDoDue);
+            _toDoContainer.appendChild(_toDoPrioDisplay);
+            _toDoContainer.appendChild(_toDoComplete);
+            _toDoContainer.appendChild(_toDoEditButton);
             _toDoContainer.appendChild(_toDoDelete);
 
             // Add container to DOM
@@ -265,8 +405,15 @@ export const UI = (() => {
                 _toDoDeleteHandler(e);
             });
 
-            // Add eventlisteners for opening ToDo details
+            // Add eventlisteners for opening ToDo edit
+            _toDoEditButton.addEventListener('click', function(e) {
+                _toDoEditHandler(e);
+            });
 
+            // On completion change color to green
+            _toDoComplete.addEventListener('click', function(e) {
+                _toDoCompleteHandler(e);
+            });
         };
     };
 
@@ -281,6 +428,20 @@ export const UI = (() => {
             _selectProjectOption.setAttribute('value', projects[i].getTitle());
             _selectProjectOption.textContent = projects[i].getTitle();
             _toDoProjectSelect.appendChild(_selectProjectOption);
+        };
+    };
+
+    const _populateEditToDoFormProjectOptions = (projects) => {
+        const _editToDoProjectSelect = document.getElementById('editToDoProjectSelect');
+        const _selectNullOption = document.createElement('option');
+        _selectNullOption.setAttribute('value', '');
+        _editToDoProjectSelect.appendChild(_selectNullOption);
+
+        for (let i = 0; i < projects.length; i++) {
+            const _selectProjectOption = document.createElement('option');
+            _selectProjectOption.setAttribute('value', projects[i].getTitle());
+            _selectProjectOption.textContent = projects[i].getTitle();
+            _editToDoProjectSelect.appendChild(_selectProjectOption);
         };
     };
 
