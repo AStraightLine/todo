@@ -55,6 +55,16 @@ export const Interface = (() => {
         _populateStorage();
     };
 
+    const _assignToProjects = (todo) => {
+        let project = todo.getProject();
+        for (let i = 0; i < _allProjects.length; i++) {
+            if (_allProjects[i].getTitle() == project) {
+                _allProjects[i].addToDo(todo);
+                return;
+            }
+        }
+    }
+
     const newProject = (title) => {
         _allProjects.push(Project(title));
         _populateStorage();
@@ -114,6 +124,7 @@ export const Interface = (() => {
                 _storageReturn[i]._project
             );
             _allToDos[i] = _todo;
+            _assignToProjects(_todo);
         }
 
         _storageReturn = JSON.parse(localStorage.getItem('_todayToDos'));

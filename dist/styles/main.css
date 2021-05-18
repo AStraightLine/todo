@@ -4,6 +4,9 @@
 }
 
 @media (max-width: 768px) {
+    #tickIcon {
+        display: none;
+    }
     #sideNavContainer {
         display: none;
     }
@@ -11,9 +14,6 @@
 
 @media (min-width: 768px) {
     #hamburgerMenuIcon {
-        display: none;
-    }
-    .hamburgerPart {
         display: none;
     }
 }
@@ -29,41 +29,53 @@ body {
 
 header {
     width: 100vw;
-    height: 65px;
-    border-bottom: 1px solid rgba(25, 25, 25, 0.9);
     display: flex;
     flex-direction: row;
+    align-items: center;
+    background-color: #778899;
+    box-shadow: 0px 5px 5px -2px #888;
+    border-bottom: 1px solid grey;
+}
+
+#hamburgerContainer {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+#tickIcon {
+    width: 40px;
+    height: 40px;
+    filter: invert(0.99);
 }
 
 #hamburgerMenuIcon {
-    width: 200px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.hamburgerPart {
-    width: 35px;
-    height: 5px;
-    background-color: black;
-    margin: 4px 0;
-    border-radius: 3px;
+    width: 40px;
+    height: 40px;
+    filter: invert(0.99);
 }
 
 h1 {
-    line-height: 65px;
-    font-weight: 500;
+    width: 200px;
+    font-size: 28px;
     font-style: italic;
+    font-weight: 400;
+    line-height: 50px;
+    color: white;
+}
+
+#addButtonContainer {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-end;
 }
 
 #addToDoButton {
-    flex: 1 1 auto;
-    text-align: end;
-    line-height: 65px;
-    padding-right: 50px;
-    font-size: 72px;
+    justify-self: flex-end;
+    width: 40px;
+    height: 40px;
+    padding-right: 25px;
+    filter: invert(1);
 }
 
 #mainContainer {
@@ -75,7 +87,11 @@ h1 {
 #sideNavContainer {
     width: 200px;
     height: 100%;
-    border-right: 1px solid rgba(25, 25, 25, 0.9);
+    background-color: #CCD2D9;
+    box-shadow: 5px 0 5px -2px #888;
+    border-right: 1px solid grey;
+    flex-direction: column;
+    align-items: center;
 }
 
 #sideNavContent {
@@ -95,7 +111,7 @@ h1 {
 }
 
 .projectSelected {
-    background-color: lightgrey;
+    background-color: white;
 }
 
 #projectsContainer {
@@ -265,6 +281,7 @@ h1 {
 #mainContentContainer {
     display: flex;
     flex: 1 1 auto;
+    background-color: #EEF0F2;
 }
 
 #toDosContainer {
@@ -285,6 +302,7 @@ h1 {
     padding: 5px;
     border-bottom: 1px solid black;
     align-items: center;
+    background-color: white;
 }
 
 .toDoTitle {
