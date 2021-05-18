@@ -56,6 +56,7 @@ export const UI = (() => {
     let _editingToDo;
 
     const initUI = () => {
+        Interface.initStorage();
         _currentProjectSelection = '_allToDos';
         _highlightProjectSelection('_allToDos');
         _populateToDoDisplay(Interface.getProject(_currentProjectSelection));

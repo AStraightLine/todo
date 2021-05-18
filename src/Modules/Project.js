@@ -26,5 +26,7 @@ export const Project = (title) => {
         addToDo,
         getToDos,
         removeToDo,
+        _title,
+        _ToDos,
     }
 }

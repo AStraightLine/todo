@@ -60,5 +60,12 @@ export const ToDo = (title, desc, due, prio, formDue, project) => {
         getFormDue,
         getProject,
         getComplete,
+        _title,
+        _desc,
+        _due,
+        _prio,
+        _formDue,
+        _project,
+        _complete,
     };
 };
