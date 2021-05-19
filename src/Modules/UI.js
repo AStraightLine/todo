@@ -3,6 +3,12 @@ import {format, formatDistance, formatRelative, subDays} from 'date-fns'
 
 export const UI = (() => {
 
+    // Mobile nav selection
+    const _hamburgerMenuIcon = document.getElementById('hamburgerMenuIcon');
+
+    // Side Nav
+    const _sideNavContainer = document.getElementById('sideNavContainer');
+
     // Open form buttons
     const _addToDoButton = document.getElementById('addToDoButton');
     const _newProjectButton = document.getElementById('newProjectButton');
@@ -67,6 +73,7 @@ export const UI = (() => {
     };
 
     const _initListeners = () => {
+        _hamburgerMenuIcon.addEventListener('click', _mobileNavHandler);
         _addToDoButton.addEventListener('click', _openToDoForm);
         _closeToDoFormButton.addEventListener('click', _closeToDoForm);
         _clearToDoFieldsButton.addEventListener('click', _clearToDoForm);
@@ -138,6 +145,14 @@ export const UI = (() => {
         
         _clearToDosDisplay();
         _populateToDoDisplay(_project);
+    }
+
+    const _mobileNavHandler = () => {
+        if(_sideNavContainer.style.display == '' || _sideNavContainer.style.display == 'none') {
+            _sideNavContainer.style.display = 'flex';
+        } else {
+            _sideNavContainer.style.display = '';
+        }
     }
 
     const _highlightProjectSelection = (selectionID) => {

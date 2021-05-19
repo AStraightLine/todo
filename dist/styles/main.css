@@ -370,7 +370,7 @@ h1 {
 }
 
 .toDoCompleted {
-    background-color: #6FF36D;
+    background-color: #CCD9CD;
 }
 
 .toDoCompleteImg {
@@ -380,4 +380,8 @@ h1 {
 
 .toDoContainer:hover {
     font-weight: 900;
+}
+
+.mobileNavOpened {
+    display: flex;
 }

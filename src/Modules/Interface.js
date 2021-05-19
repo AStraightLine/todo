@@ -100,7 +100,7 @@ export const Interface = (() => {
         }
     }
 
-    const _populateStorage = () => {
+    const populateStorage = () => {
         localStorage.setItem('_allToDos', JSON.stringify(_allToDos));
         localStorage.setItem('_todayToDos', JSON.stringify(_todayToDos));
         localStorage.setItem('_allProjects', JSON.stringify(_allProjects));
