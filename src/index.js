@@ -1,3 +1,3 @@
-import {UI} from './Modules/UI'
+import { UI } from './Modules/UI'
 
-UI.initUI();
+UI.initUI()
